@@ -1,4 +1,3 @@
-import delay from '../../utils/delay';
 import APIError from '../../errors/APIError';
 
 class HttpClient{
@@ -7,7 +6,7 @@ class HttpClient{
   }
 
   async get(path){
-    await delay(500);
+    
     const response = await fetch(`${this.baseUrl}${path}`);
     
     const contentType = response.headers.get('content-type');
@@ -23,6 +22,21 @@ class HttpClient{
     }
    
     throw new APIError(response, body)
+  }
+
+
+  async post(path, data){
+    await fetch(`${this.baseUrl}${path}`, {
+      method:'POST',
+        headers: {
+          'Accept': 'application/json. text/plain, */*',
+          'Content-Type': 'application/json'
+        },
+
+        body:JSON.stringify(data),
+    })
+
+    
   }
 
 }
